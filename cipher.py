@@ -11,6 +11,11 @@ reflector = "IMETCGFRAYSQBZXWLHKDVUPOJN"
 turnovers = ["Y", "E", "N"]
 indices = [0, 0, 0]
 
+def set_indices(a, b, c):
+    indices[0] = a % 26
+    indices[1] = b % 26
+    indices[2] = c % 26
+
 def move_rotors():
   second_move = rotors[0][indices[0]] == turnovers[0]
   third_move = rotors[1][indices[1]] == turnovers[1]
@@ -49,5 +54,3 @@ def encrypt_message(message):
         move_rotors()
         result += encrypt(c)
     return result
-
-print(encrypt_message("UNRSJXFUHZV"))
