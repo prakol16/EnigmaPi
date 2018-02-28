@@ -6,7 +6,36 @@ dev = InputDevice('/dev/input/event0')
 
 GPIO.setmode(GPIO.BCM)
 port_map = {
-    'A': 3 # TODO
+    'Q': 12,
+    'W': 7,
+    'E': 8,
+    'R': 25,
+    'T': 14,
+    'Y': 21,
+    'U': 24,
+    'I': 20,
+    'O': 16,
+    'P': 23,
+    'L': 18,
+    'M': 15,
+    'A': 27,
+    'S': 4,
+    'D': 10,
+    'F': 17,
+    'G': 9,
+    'H': 19,
+    'J': 3,
+    'K': 2,
+    'Z': 11,
+    'X': 22,
+    'C': 5,
+    'V': 6,
+    'B': 26,
+    'N': 13 
+    
+    
+    
+    # TODO
 }
 
 for port in port_map.values():
@@ -30,10 +59,10 @@ try:
                 key = scancodes[event.code]
                 if len(key) == 1 and 'A' <= key <= 'Z':
                     cipher.move_rotors()
-                    # print(cipher.encrypt(key))
+                    print(cipher.encrypt(key))
                     port_num = port_map[cipher.encrypt(key)]
                     GPIO.output(port_num, GPIO.HIGH)
-                    time.sleep(0.2)
+                    time.sleep(1)
                     GPIO.output(port_num, GPIO.LOW)
                     buffer = []
                 elif len(key) == 1 and '0' <= key <= '9':
@@ -44,6 +73,15 @@ try:
                     cipher.set_indices(*settings)
                     print(settings)
                     buffer = []
+                elif key == u'TAB':
+                    print("Testing LEDs")
+                    keyboard ="QWERTYUIOPLMASDFGHJKZXCVBN"
+                    for c in keyboard:
+                        print(c)
+                        GPIO.output(port_map[c],GPIO.HIGH)
+                        time.sleep(0.5)
+                        GPIO.output(port_map[c],GPIO.LOW)
+                        time.sleep(0.5)
 finally:
     for port in port_map.values():
         GPIO.output(port, GPIO.LOW)
